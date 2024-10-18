@@ -1,0 +1,75 @@
+import {createRouter,createWebHistory} from "vue-router"
+let router=createRouter({
+    // createWebHistory 创建了基于 HTML5 History API 的路由历史记录模式。这种模式会使用浏览器的历史记录栈来管理路由，使得 URL 看起来更美观.
+    history:createWebHistory(),
+    // 这是路由配置数组，定义了应用的不同路由。
+    routes:[
+        {
+            path:"/login",
+            // 使用动态导入的方式引入了对应路径的组件。当用户访问 /login 路径时，会加载 @/views/login/index.vue 组件。
+            component:()=>import("@/views/login/index.vue"),
+            name:"login"
+        },
+        {
+            path:"/",
+            component:()=>import("@/views/layout/index.vue"),
+            name:"layout",
+            redirect:"/home",
+            children:[
+                {
+                    path:"/home",
+                    component:()=>import("@/views/home/Home.vue"),
+                    meta:{titile:"首页"}
+                },
+                {
+                    path:"/user",
+                    component:()=>import("@/views/user/user.vue"),
+                    meta:{titile:"用户管理"}
+                },
+                {
+                    path:"/role",
+                    component:()=>import("@/views/role/Role.vue"),
+                    meta:{titile:"角色管理"}
+                },
+                {
+                    path:"/school",
+                    component:()=>import("@/views/students/School.vue"),
+                    meta:{titile:"学校管理"}
+                },
+                {
+                    path:"/class",
+                    component:()=>import("@/views/students/Class.vue"),
+                    meta:{titile:"班级管理"}
+                },
+                {
+                    path:"/majors",
+                    component:()=>import("@/views/students/Majors.vue"),
+                    meta:{titile:"专业管理"}
+                },
+                {
+                    path:"/student",
+                    component:()=>import("@/views/students/Student.vue"),
+                    meta:{titile:"学生管理"}
+                },
+                {
+                    path:"/student/update/:_id",
+                    component:()=>import("@/views/students/components/StudentUpdate.vue"),
+                    meta:{title:"学生添加/编辑"}
+                }
+            ]
+        },
+        {
+            path:"/404",
+            component:()=>import("@/views/404/index.vue"),
+            name:"404"
+        },
+        {
+            //任意路由,配置中所有路由都没有配置上的时候展示的路由
+            //当路由无法匹配是使用该类型
+            path:"/:pathMatch(.*)*",
+            redirect:"/404",
+            name:"Any"
+        },
+    ]
+})
+export default router

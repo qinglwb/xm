@@ -1,0 +1,10 @@
+import axios from "axios"
+axios({
+    //找到的是全局中的mock 所以得把mock放到全局
+    url:"/mock/login",
+    method:"post",
+    data:{
+        username:"test1",
+        password:"123456"
+    }
+})
